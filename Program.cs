@@ -3,36 +3,28 @@
           // длина которых меньше или равна 3 символам. Првоначальный массив можно задать с клавиатуры,
           // либо задать на старте выполнения алгоритма. При решении не рекомендуется пользоваться
           // коллекциями, лучше обойтись исключительно массивами.
+const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789^!?-+=_()*&|%$#@";
 Random RundNum = new Random();
-int StringNumbers = RundNum.Next(3,8);
-string[] StringMas;
+int StringNumbers = RundNum.Next(3,11);
+string[] StringMas, ResultMas;
 StringMas = new string[StringNumbers];
-/*
-int B = RundNum.Next(-9,10);
-int Product = 0;
-*/
-Console.WriteLine(StringMas[0]);
+ResultMas = new string[StringNumbers];
 
-/*
-for(int i=2; i<10; i++) 
-    for(int j=2; j<10; j++)
-        Console.WriteLine($"{i} * {j} = {i * j}");
+          // Генерация строк.  
+for (int i=0; i<StringMas.Length; i++) {
+    int CurrentStrLength = RundNum.Next(1,8);
+    StringMas[i] = new string(Enumerable.Repeat(Chars, CurrentStrLength).Select(s => s[RundNum.Next(s.Length)]).ToArray());
+}
+Console.WriteLine("Число элементов-строк во входном массиве - {0} :", StringNumbers);
+Console.Write("[");
+Console.Write(String.Join(", ", StringMas));
+Console.WriteLine("]\n");
+          // Создание копии массива и удаление из нее строк с длиной, превышающей заданную.
+ResultMas = StringMas;
+for (int i=0; i<StringMas.Length; i++) 
+  if (StringMas[i].Length > 3) ResultMas = ResultMas.Where(e => e != StringMas[i]).ToArray();
 
-
-//    string res = Method_04(3, "A");
-//    Console.WriteLine(res);
-//    Console.WriteLine("Hello, World! #2");
-
-
-
-static string Method_04(int count, string c) {
-    int i = 0;
-    string result = string.Empty;
-    while (i < count) {
-        result = result + c;
-        i++;
-    }
-    return result;
-}      
-*/
-
+Console.WriteLine("Число элементов-строк во выходном массиве - {0} :", ResultMas.Length);
+Console.Write("[");
+Console.Write(String.Join(", ", ResultMas));
+Console.WriteLine("]\n");
